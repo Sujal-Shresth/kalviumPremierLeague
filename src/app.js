@@ -134,39 +134,27 @@ function FilterByTeamxSortByNoOfAwards(team){
   }
   return filteredTeamPlayers;
 }
+
 //Challenge 1 - Sort players that have won _______ award _____ times and belong to _______ country in alphabetical order of their names
-function SortByNamexAwardxTimes(awardName, noOfTimes, country){
-  var filteredAwardPlayers = filterByAwardxTimes(awardName,noOfTimes);
+function SortByNamexAwardxTimes(awardName, noOfTimes, country) {
+  var filteredAwardPlayers = filterByAwardxTimes(awardName, noOfTimes);
   var filteredCountryPlayers = filteredAwardPlayers.filter((player) => {
-    return player.country == country;
-  })
-  for(let i = 0; i < filteredCountryPlayers; i++){
-    for (let j = i + 1; j < filteredCountryPlayers.length; j++) {
-      if (filteredCountryPlayers[i].name > filteredCountryPlayers[j].name) {
-        let temp = filteredCountryPlayers[i];
-        filteredCountryPlayers[i] = filteredCountryPlayers[j];
-        filteredCountryPlayers[j] = temp;
-      }
-    }
-  }
+    return player.country === country;
+  });
+  filteredCountryPlayers.sort((a, b) => a.name.localeCompare(b.name));
+
   return filteredCountryPlayers;
 }
+
 //Challenge 2 - Sort players that are older than _____ years in alphabetical order
 //Sort the awards won by them in reverse chronological order
 
 function SortByNamexOlderThan(age) {
-  var data = players.filter(player => player.age > age);
-  for(let i = 0; i < data; i++){
-    for (let j = i + 1; j < data.length; j++) {
-      if (data[i].name > data[j].name) {
-        let temp = data[i];
-        data[i] = data[j];
-        data[j] = temp;
-      }
-    }
-  }
-  for (let i = 0; i < data.length; i++) {
-    data[i].awards.sort((a, b) => b.year - a.year);
-  }
+  var data = players.filter((player) => player.age > age);
+  data.sort((a, b) => a.name.localeCompare(b.name));
+  data.forEach((player) => {
+    player.awards.sort((a, b) => b.year - a.year);
+  });
+
   return data;
 }
